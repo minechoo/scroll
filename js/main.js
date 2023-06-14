@@ -3,29 +3,11 @@ const list = document.querySelector('ul');
 const btns = list.querySelectorAll('li');
 const speed = 1000;
 let enableEvent = true;
+let autoScroll = true;
 
 window.addEventListener('scroll', activation);
 window.addEventListener('resize', modifyPos);
-window.addEventListener(
-	'mousewheel',
-	(e) => {
-		//console.log(e);
-		e.preventDefault();
-		const active = list.querySelector('li.on');
-		const active_index = Array.from(btns).indexOf(active);
-
-		if (e.deltaY > 0) {
-			console.log('다운');
-			if (active_index === btns.length - 1) return;
-			moveScroll(active_index + 1);
-		} else {
-			console.log('업');
-			if (active_index === 0) return;
-			moveScroll(active_index - 1);
-		}
-	},
-	{ passive: false }
-);
+autoScroll && window.addEventListener('mousewheel', moveAuto, { passive: false });
 
 btns.forEach((btn, idx) => {
 	btn.addEventListener('click', () => enableEvent && moveScroll(idx));
@@ -65,4 +47,20 @@ function modifyPos() {
 	const active_index = Array.from(btns).indexOf(active);
 	console.log(active_index);
 	window.scroll(0, secs[active_index].offsetTop);
+}
+
+function moveAuto(e) {
+	e.preventDefault();
+	const active = list.querySelector('li.on');
+	const active_index = Array.from(btns).indexOf(active);
+
+	if (e.deltaY > 0) {
+		console.log('다운');
+		if (active_index === btns.length - 1) return;
+		moveScroll(active_index + 1);
+	} else {
+		console.log('업');
+		if (active_index === 0) return;
+		moveScroll(active_index - 1);
+	}
 }
