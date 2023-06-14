@@ -1,11 +1,12 @@
 const secs = document.querySelectorAll('section');
 const btns = document.querySelectorAll('ul li');
 const speed = 1000;
+let enableEvent = true;
 
 window.addEventListener('scroll', activation);
 
 btns.forEach((btn, idx) => {
-	btn.addEventListener('click', () => moveScroll(idx));
+	btn.addEventListener('click', () => enableEvent && moveScroll(idx));
 });
 
 function activation() {
@@ -24,9 +25,11 @@ function activation() {
 }
 
 function moveScroll(idx) {
+	enableEvent = false;
 	new Anime(window, {
 		prop: 'scroll',
 		value: secs[idx].offsetTop,
 		duration: speed,
+		callback: () => (enableEvent = true),
 	});
 }
