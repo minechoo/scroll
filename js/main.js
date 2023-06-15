@@ -7,6 +7,7 @@ const secs = document.querySelectorAll('section');
 const list = document.querySelector('ul');
 const btns = list.querySelectorAll('li');
 const icon = document.querySelector('.svgBox path');
+const box = document.querySelector('.box');
 const icon_len = 2730;
 const speed = 500;
 let enableEvent = true;
@@ -25,21 +26,9 @@ window.addEventListener('scroll', ()=>{
 //setTimeout의 딜레이값을 200으로 지정하면 1000/200이 되므로 1초에  60번 호출하는 구문을 5번으로 줄임
 
 window.addEventListener('scroll', () => {
-	const scroll = window.scrollY;
-	//해당 섹션 영역에 도달했을때 다시 0으로 보정된 스크롤값
-	let scroll2 = (scroll - secs[2].offsetTop - baseline) * 5;
-
-	//해당 섹션에 스크롤이 도달하면
-	if (scroll > secs[2].offsetTop + baseline) {
-		//아이콘의 strokeDashoffset값을 보정된 scroll2값으로 계속 뺴줌 (선이 그어지기 시작함)
-		icon.style.strokeDashoffset = icon_len - scroll2;
-		//scroll2값이 만약에 전체 선의 길이를 넘어가는 순간 값을 0으로 강제고정
-		//이렇게 하지 않으면 다시 반대방향으로 선이 빠지게됨
-		scroll2 >= icon_len && (scroll2 = icon_len);
-	} else {
-		//해당 섹션에서 스크롤이 벗어나게 되면 다시 strokeDashoffset값을 원래 고정해서 초기화
-		icon.style.strokeDashoffset = icon_len;
-	}
+	//커스텀 스크롤함수 호출 (throttling구문 밖에 호출하는 이유는 path모션을 부드럽게 실행하기 위함)
+	sec3_custom_scroll();
+	sec4_custom_scroll();
 
 	//500일 경우 : 31번 호출
 	if (eventBlocker) return; //true 이면 끊어버리고
@@ -125,5 +114,35 @@ function moveAuto(e) {
 		console.log('업');
 		if (active_index === 0) return;
 		moveScroll(active_index - 1);
+	}
+}
+
+function sec3_custom_scroll() {
+	const scroll = window.scrollY;
+	console.log(scroll);
+	let scroll2 = (scroll - secs[2].offsetTop - baseline) * 5;
+
+	if (scroll > secs[2].offsetTop + baseline) {
+		scroll2 >= icon_len && (scroll2 = icon_len);
+		console.log(scroll2);
+		//위의 조건식에서 만들어진 scroll2값이 아래코드에서 활용되야 하므로
+		//해당 코드의 순서가 변경되면 안됨
+		icon.style.strokeDashoffset = icon_len - scroll2;
+	} else {
+		icon.style.strokeDashoffset = icon_len;
+	}
+}
+
+function sec4_custom_scroll() {
+	const scroll = window.scrollY;
+	let scroll2 = (scroll - secs[3].offsetTop - baseline) / 500;
+
+	if (scroll > secs[3].offsetTop + baseline) {
+		console.log(scroll2);
+		box.style.transform = `scale(${1 + scroll2}) rotate(${0 + scroll2 * 100}deg)`;
+		box.style.opacity = 1 - scroll2;
+	} else {
+		box.style.transform = `scale(1) rotate(0deg)`;
+		box.style.opacity = 1;
 	}
 }
