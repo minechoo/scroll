@@ -44,6 +44,92 @@ section {
 	}
 	&:nth-of-type(3) {
 		background: orange;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		//path모션 설정방법
+		//1.개발자도구에서 stroke-dasharray값을 계속 늘리면 다시 선이 온전히 완성되는 수치값 파악
+		//2.위의 수치값을 stroke-dasharray로 지정 (가시영역에서의 선의 길이)
+		//3.똑같은 수치값을 마이너스로 stroke-dashoffset에 지정
+		//4.hover시 stroke-dashoffset값을 0으로 변경
+
+		.svgBox {
+			width: 700px;
+			height: 700px;
+			border: 1px solid red;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			svg {
+				path {
+					fill: rgba(0, 0, 0, 0.3);
+					stroke: #000;
+					stroke-width: 10;
+					stroke-dasharray: 2730;
+					stroke-dashoffset: 2730;
+					stroke-linecap: round;
+				}
+			}
+		}
+		.circle_box {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100px;
+			height: 100px;
+			border: 1px solid red;
+
+			svg {
+				path {
+					fill: transparent;
+					stroke: #000;
+					stroke-width: 40;
+					//선의 빈간격 설정, 빈간격크기만큼 선의 그어져있는 부분도 같이 늘어남
+					stroke-dasharray: 1650;
+					stroke-dashoffset: 1650;
+					transition: stroke-dashoffset 1s;
+					stroke-linecap: round;
+				}
+			}
+			// &:hover {
+			// 	svg {
+			// 		path {
+			// 			stroke-dashoffset: 0;
+			// 		}
+			// 	}
+			// }
+		}
+		.circle_box_02 {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100px;
+			height: 100px;
+			border: 1px solid red;
+
+			svg {
+				path {
+					fill: transparent;
+					stroke: #000;
+					stroke-width: 40;
+					//선의 빈간격 설정, 빈간격크기만큼 선의 그어져있는 부분도 같이 늘어남
+					stroke-dasharray: 1650;
+					stroke-dashoffset: -300;
+					transition: 1s;
+					stroke-linecap: round;
+					animation: cc infinite;
+				}
+			}
+			&:hover {
+				svg {
+					path {
+						// stroke-dashoffset: 0;
+					}
+				}
+			}
+		}
 	}
 	&:nth-of-type(4) {
 		background: lightgreen;
@@ -69,5 +155,13 @@ ul {
 			height: 100px;
 			background: #000;
 		}
+	}
+}
+@keyframes cc {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
 	}
 }

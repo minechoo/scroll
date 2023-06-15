@@ -58,6 +58,60 @@ section:nth-of-type(2).on article {
 }
 section:nth-of-type(3) {
   background: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+section:nth-of-type(3) .svgBox {
+  width: 700px;
+  height: 700px;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section:nth-of-type(3) .svgBox svg path {
+  fill: rgba(0, 0, 0, 0.3);
+  stroke: #000;
+  stroke-width: 10;
+  stroke-dasharray: 2730;
+  stroke-dashoffset: 2730;
+  stroke-linecap: round;
+}
+section:nth-of-type(3) .circle_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid red;
+}
+section:nth-of-type(3) .circle_box svg path {
+  fill: transparent;
+  stroke: #000;
+  stroke-width: 40;
+  stroke-dasharray: 1650;
+  stroke-dashoffset: 1650;
+  transition: stroke-dashoffset 1s;
+  stroke-linecap: round;
+}
+section:nth-of-type(3) .circle_box_02 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border: 1px solid red;
+}
+section:nth-of-type(3) .circle_box_02 svg path {
+  fill: transparent;
+  stroke: #000;
+  stroke-width: 40;
+  stroke-dasharray: 1650;
+  stroke-dashoffset: -300;
+  transition: 1s;
+  stroke-linecap: round;
+  animation: cc infinite;
 }
 section:nth-of-type(4) {
   background: lightgreen;
@@ -81,6 +135,15 @@ ul li {
 ul li.on {
   height: 100px;
   background: #000;
+}
+
+@keyframes cc {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
